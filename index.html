@@ -2,49 +2,85 @@
 <html>
 
 <head>
-    <title>Comment Page</title>
+    <title>Comments Page</title>
+    <style>
+        /* Add your custom styles here */
+    </style>
 </head>
 
 <body>
-    <h1>Comment Page</h1>
-
-    <form id="comment-form">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required><br>
-
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br>
-
-        <label for="comment">Comment:</label>
-        <textarea id="comment" name="comment" required></textarea><br>
-
-        <input type="submit" value="Submit">
-    </form>
-
     <h2>Comments</h2>
-
     <div id="comments"></div>
 
+    <h2>Add a Comment</h2>
+    <form id="commentForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+
+        <label for="comment">Comment:</label>
+        <textarea id="comment" required></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
+
     <script>
-        document.getElementById('comment-form').addEventListener('submit', async (event) => {
+        // Function to handle form submission
+        const handleFormSubmit = (event) => {
             event.preventDefault();
 
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const comment = document.getElementById('comment').value;
 
-            const response = await fetch('/.netlify/functions/save-comment', {
-                method: 'POST',
-                body: JSON.stringify({ name, email, comment }),
-            });
+            const formData = { name, email, comment };
 
-            if (response.ok) {
-                alert('Comment saved successfully!');
-                // You can add further logic here, such as refreshing the comment section.
-            } else {
-                alert('Failed to save comment. Please try again.');
-            }
-        });
+            // Send POST request to the serverless function to add the comment
+            fetch('/.netlify/functions/add-comment', {
+                method: 'POST',
+                body: JSON.stringify(formData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Comment added successfully:', data);
+
+                    // Clear form inputs after successful submission
+                    document.getElementById('name').value = '';
+                    document.getElementById('email').value = '';
+                    document.getElementById('comment').value = '';
+
+                    // Refresh the comments section to display the new comment
+                    fetchComments();
+                })
+                .catch(error => console.error('Error adding comment:', error));
+        };
+
+        // Function to fetch and display comments
+        const fetchComments = () => {
+            fetch('/.netlify/functions/get-comments')
+                .then(response => response.json())
+                .then(data => {
+                    // Iterate over the comments data and create HTML markup
+                    const commentsHtml = data.map(comment => `
+              <div>
+                <h3>${comment.data.name}</h3>
+                <p>${comment.data.comment}</p>
+              </div>
+            `).join('');
+
+                    // Inject the comments HTML into the comments div
+                    document.getElementById('comments').innerHTML = commentsHtml;
+                })
+                .catch(error => console.error('Error fetching comments:', error));
+        };
+
+        // Attach event listener to form submission
+        document.getElementById('commentForm').addEventListener('submit', handleFormSubmit);
+
+        // Fetch and display comments when the page loads
+        fetchComments();
     </script>
 </body>
 
