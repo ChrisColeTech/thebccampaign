@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Comment Page</title>
+</head>
+
+<body>
+    <h1>Comment Page</h1>
+
+    <form id="comment-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+
+        <label for="comment">Comment:</label>
+        <textarea id="comment" name="comment" required></textarea><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <h2>Comments</h2>
+
+    <div id="comments"></div>
+
+    <script>
+        document.getElementById('comment-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const comment = document.getElementById('comment').value;
+
+            const response = await fetch('/.netlify/functions/save-comment', {
+                method: 'POST',
+                body: JSON.stringify({ name, email, comment }),
+            });
+
+            if (response.ok) {
+                alert('Comment saved successfully!');
+                // You can add further logic here, such as refreshing the comment section.
+            } else {
+                alert('Failed to save comment. Please try again.');
+            }
+        });
+    </script>
+</body>
+
+</html>
