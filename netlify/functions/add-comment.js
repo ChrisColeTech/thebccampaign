@@ -1,39 +1,33 @@
-// Function to handle form submission
-const handleFormSubmit = (event) => {
-  event.preventDefault();
+const { Client, query } = require('faunadb');
 
-  const name = document.getElementById('name').value;
-  const email = document.getElementById('email').value;
-  const comment = document.getElementById('comment').value;
+/* Configure faunaDB Client with our secret */
+const client = new Client({ secret: 'fnAFG-Ky5LAATX9wNckFUbX0ngbxY2jv_PlqSUVN' });
 
-  const formData = { name, email, comment };
+/* Export our lambda function as named "handler" export */
+const handler = async (event) => {
+  /* Parse the string body into a usable JS object */
+  const data = JSON.parse(event.body);
+  console.log('Function `create` invoked', data);
+  const { name, email, comment } = data;
+  const item = { data: { name, email, comment, timestamp: new Date().toISOString() } };
 
-  fetch('/.netlify/functions/create-comment', {
-    method: 'POST',
-    body: JSON.stringify(formData)
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Comment added:', data);
-      document.getElementById('commentForm').reset();
-      appendComment(data); // Append the new comment to the comments div
-    })
-    .catch(error => console.error('Error adding comment:', error));
+  /* Construct the fauna query */
+  try {
+    const response = await client.query(query.Create(query.Collection('comments'), item));
+    console.log('Success', response);
+    /* Success! Return the response with statusCode 200 */
+    return {
+      statusCode: 200,
+      body: JSON.stringify(response),
+    };
+  } catch (error) {
+    console.log('Error', error);
+    /* Error! Return the error with statusCode 400 */
+    return {
+      statusCode: 400,
+      body: JSON.stringify(error),
+    };
+  }
 };
 
-// Function to append a single comment to the comments div
-const appendComment = (comment) => {
-  const commentHtml = `
-      <div>
-          <h3>${comment.name}</h3>
-          <p>${comment.comment}</p>
-      </div>
-  `;
-
-  // Append the new comment to the comments div
-  const commentsDiv = document.getElementById('comments');
-  commentsDiv.insertAdjacentHTML('beforeend', commentHtml);
-};
-
-// Attach event listener to form submission
-document.getElementById('commentForm').addEventListener('submit', handleFormSubmit);
+module.exports = { handler };
