@@ -8,7 +8,7 @@ const handleFormSubmit = (event) => {
 
     const formData = { name, email, comment };
 
-    fetch('/.netlify/functions/create-comment', {
+    fetch('/.netlify/functions/add-comment', {
         method: 'POST',
         body: JSON.stringify(formData)
     })
@@ -16,9 +16,23 @@ const handleFormSubmit = (event) => {
         .then(data => {
             console.log('Comment added:', data);
             document.getElementById('commentForm').reset();
-            fetchComments(); // Refresh comments after adding a new one
+            appendComment(data); // Append the new comment to the comments div
         })
         .catch(error => console.error('Error adding comment:', error));
+};
+
+// Function to append a single comment to the comments div
+const appendComment = (comment) => {
+    const commentHtml = `
+        <div>
+            <h3>${comment.name}</h3>
+            <p>${comment.comment}</p>
+        </div>
+    `;
+
+    // Append the new comment to the comments div
+    const commentsDiv = document.getElementById('comments');
+    commentsDiv.insertAdjacentHTML('beforeend', commentHtml);
 };
 
 // Attach event listener to form submission
