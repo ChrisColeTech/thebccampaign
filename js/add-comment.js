@@ -13,10 +13,10 @@ const handleFormSubmit = (event) => {
         body: JSON.stringify(formData)
     })
         .then(response => response.json())
-        .then(data => {
-            console.log('Comment added:', data);
+        .then(result => {
+            console.log('Comment added:', result);
             document.getElementById('commentForm').reset();
-            appendComment(data); // Append the new comment to the comments div
+            appendComment(result.data); // Append the new comment to the comments div
         })
         .catch(error => console.error('Error adding comment:', error));
 };
