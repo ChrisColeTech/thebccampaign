@@ -1,87 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Comments Page</title>
-    <style>
-        /* Add your custom styles here */
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comments</title>
 </head>
 
 <body>
     <h2>Comments</h2>
     <div id="comments"></div>
 
-    <h2>Add a Comment</h2>
     <form id="commentForm">
-        <label for="name">Name:</label>
-        <input type="text" id="name" required>
-
-        <label for="email">Email:</label>
-        <input type="email" id="email" required>
-
-        <label for="comment">Comment:</label>
-        <textarea id="comment" required></textarea>
-
+        <input type="text" id="name" placeholder="Name" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <textarea id="comment" placeholder="Comment" required></textarea>
         <button type="submit">Submit</button>
     </form>
 
-    <script>
-        // Function to handle form submission
-        const handleFormSubmit = (event) => {
-            event.preventDefault();
-
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const comment = document.getElementById('comment').value;
-
-            const formData = { name, email, comment };
-
-            // Send POST request to the serverless function to add the comment
-            fetch('/.netlify/functions/add-comment', {
-                method: 'POST',
-                body: JSON.stringify(formData)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Comment added successfully:', data);
-
-                    // Clear form inputs after successful submission
-                    document.getElementById('name').value = '';
-                    document.getElementById('email').value = '';
-                    document.getElementById('comment').value = '';
-
-                    // Refresh the comments section to display the new comment
-                    fetchComments();
-                })
-                .catch(error => console.error('Error adding comment:', error));
-        };
-
-        // Function to fetch and display comments
-        const fetchComments = () => {
-            fetch('/.netlify/functions/get-comments')
-                .then(response => response.json())
-                .then(data => {
-                    // Iterate over the comments data and create HTML markup
-                    const commentsHtml = data.map(comment => `
-              <div>
-                <h3>${comment.data.name}</h3>
-                <p>${comment.data.comment}</p>
-              </div>
-            `).join('');
-
-                    // Inject the comments HTML into the comments div
-                    document.getElementById('comments').innerHTML = commentsHtml;
-                })
-                .catch(error => console.error('Error fetching comments:', error));
-        };
-
-        // Attach event listener to form submission
-        document.getElementById('commentForm').addEventListener('submit', handleFormSubmit);
-
-        // Fetch and display comments when the page loads
-        fetchComments();
-    </script>
+    <script src="js/fetch-comments.js"></script>
+    <script src="js/add-comment.js"></script>
 </body>
 
 </html>
