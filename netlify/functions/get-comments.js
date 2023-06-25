@@ -16,6 +16,10 @@ const handler = async (event) => {
 
     return {
       statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*', // Allow requests from any origin
+        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+      },
       body: JSON.stringify(comments),
     };
   } catch (error) {

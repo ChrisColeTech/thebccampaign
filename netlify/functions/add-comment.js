@@ -18,6 +18,10 @@ const handler = async (event) => {
     /* Success! Return the response with statusCode 200 */
     return {
       statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*', // Allow requests from any origin
+        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+      },
       body: JSON.stringify(response),
     };
   } catch (error) {
