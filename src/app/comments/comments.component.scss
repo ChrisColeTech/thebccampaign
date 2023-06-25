@@ -73,11 +73,16 @@ h2 {
 }
 
 .comment-details {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.comment-details-row {
     display: flex;
     justify-content: space-between;
 }
 
-.comment-name,
-.comment-email {
+.comment-details-row>div {
     flex-basis: 45%;
 }

@@ -1,0 +1,7 @@
+{
+    "/.netlify/functions/*": {
+        "target": "https://thriving-tanuki-c43811.netlify.app/",
+        "secure": false,
+        "changeOrigin": true
+    }
+}
