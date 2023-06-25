@@ -3,15 +3,13 @@ const fetchComments = () => {
     fetch('/.netlify/functions/get-comments')
         .then(response => response.json())
         .then(data => {
-            // Iterate over the comments data and create HTML markup
             const commentsHtml = data.map(comment => `
-                <div>
-                    <h3>${comment.name}</h3>
-                    <p>${comment.comment}</p>
+                <div class="comment">
+                    <p class="comment-text">${comment.comment}</p>
+                    <p class="comment-author">-${comment.name}</p>
                 </div>
             `).join('');
 
-            // Inject the comments HTML into the comments div
             document.getElementById('comments').innerHTML = commentsHtml;
         })
         .catch(error => console.error('Error fetching comments:', error));
@@ -19,3 +17,6 @@ const fetchComments = () => {
 
 // Fetch and display comments when the page loads
 fetchComments();
+
+
+

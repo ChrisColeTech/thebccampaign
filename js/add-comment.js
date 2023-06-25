@@ -24,10 +24,10 @@ const handleFormSubmit = (event) => {
 // Function to append a single comment to the comments div
 const appendComment = (comment) => {
     const commentHtml = `
-        <div>
-            <h3>${comment.name}</h3>
-            <p>${comment.comment}</p>
-        </div>
+    <div class="comment">
+    <p class="comment-text">${comment.comment}</p>
+    <p class="comment-author">-${comment.name}</p>
+</div>
     `;
 
     // Append the new comment to the comments div
