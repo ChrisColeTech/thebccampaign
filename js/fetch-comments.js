@@ -1,6 +1,6 @@
 // Function to fetch and display comments
 const fetchComments = () => {
-    fetch('/.netlify/functions/get-comments')
+    fetch('https://thriving-tanuki-c43811.netlify.app/.netlify/functions/get-comments')
         .then(response => response.json())
         .then(data => {
             const commentsHtml = data.map(comment => `

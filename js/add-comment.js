@@ -8,7 +8,7 @@ const handleFormSubmit = (event) => {
 
     const formData = { name, email, comment };
 
-    fetch('/.netlify/functions/add-comment', {
+    fetch('https://thriving-tanuki-c43811.netlify.app/.netlify/functions/add-comment', {
         method: 'POST',
         body: JSON.stringify(formData)
     })
