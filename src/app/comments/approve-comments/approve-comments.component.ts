@@ -30,9 +30,7 @@ export class ApproveCommentsComponent implements OnInit {
   }
 
   approveComment(commentId: string) {
-    const body = { ref: commentId };
-
-    this.http.post(`${environment.apiUrl}/.netlify/functions/approve-comment`, body)
+    this.http.post(`${environment.apiUrl}/.netlify/functions/update`, commentId)
       .subscribe(response => {
         console.log('Comment approved successfully:', response);
         // Optionally, you can update the local comments array or refresh the table here
