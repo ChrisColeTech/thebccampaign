@@ -15,11 +15,16 @@ const handler = async (event) => {
             )
           )
         ),
-        query.Lambda((x) => query.Get(x))
+        query.Lambda((x) => {
+          return {
+            ref: query.Select('ref', x),
+            data: query.Select(['data'], x)
+          }
+        })
       )
     );
 
-    const comments = response.data.map((comment) => comment.data);
+    const comments = response.data.map((comment) => comment);
 
     return {
       statusCode: 200,

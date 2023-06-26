@@ -10,10 +10,10 @@
     </thead>
     <tbody>
         <tr *ngFor="let comment of comments">
-            <td>{{ comment.name }}</td>
-            <td>{{ comment.comment }}</td>
+            <td>{{ comment.data.name }}</td>
+            <td>{{ comment.data.comment }}</td>
             <td>
-                <button class="btn btn-primary" (click)="approveComment(comment.id)">Approve</button>
+                <button class="btn btn-primary" (click)="approveComment(comment.ref.id)">Approve</button>
             </td>
         </tr>
     </tbody>
