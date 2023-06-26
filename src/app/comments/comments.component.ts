@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { environment } from '../../environments/environment';
 @Component({
   selector: 'app-comments',
   templateUrl: './comments.component.html',
@@ -18,6 +18,12 @@ export class CommentsComponent implements OnInit {
     this.fetchComments();
   }
 
+
+  appendComment(comment: any) {
+    this.comments.push(comment);
+  }
+
+
   handleFormSubmit() {
     const formData = {
       name: this.name,
@@ -25,7 +31,7 @@ export class CommentsComponent implements OnInit {
       comment: this.comment
     };
 
-    this.http.post<any>('/.netlify/functions/add-comment', formData)
+    this.http.post<any>(`${environment.apiUrl}/.netlify/functions/add-comment`, formData)
       .subscribe(result => {
         console.log('Comment added:', result);
         this.resetForm();
@@ -35,12 +41,8 @@ export class CommentsComponent implements OnInit {
       });
   }
 
-  appendComment(comment: any) {
-    this.comments.push(comment);
-  }
-
   fetchComments() {
-    this.http.get<any[]>('/.netlify/functions/get-comments')
+    this.http.get<any[]>(`${environment.apiUrl}/.netlify/functions/get-comments`)
       .subscribe(data => {
         this.comments = data;
       }, error => {
