@@ -1,24 +1,33 @@
-const { Client, query } = require('faunadb');
+/* Import faunaDB sdk */
+const process = require('process')
 
-// Configure faunaDB Client with your secret
+const { Client, query } = require('faunadb')
+
+/* Configure faunaDB Client with our secret */
 const client = new Client({ secret: 'fnAFG-Ky5LAATX9wNckFUbX0ngbxY2jv_PlqSUVN' });
 
-const updateComment = async (commentRef) => {
+const handler = async (event) => {
+    const { id } = event
+    console.log(`Function 'update' invoked. Update id: ${id}`)
     try {
         const response = await client.query(
-            query.Update(commentRef, {
-                data: {
-                    approved: true, // Update the 'approved' field to 'true'
-                },
-            })
+            query.Update(
+                query.Ref(query.Collection('comments'), id),
+                { data: { approved: true } }
+            )
         );
-
-        console.log('Comment updated:', response);
+        console.log('Success:', response);
+        return {
+            statusCode: 200,
+            body: JSON.stringify(response),
+        };
     } catch (error) {
         console.error('Error updating comment:', error);
+        return {
+            statusCode: 400,
+            body: JSON.stringify(error),
+        };
     }
-};
+}
 
-// Usage: Pass the comment's reference to the updateComment function
-const commentRef = query.Ref(query.Collection('comments'), '368163016641871945');
-updateComment(commentRef);
+module.exports = { handler }
