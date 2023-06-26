@@ -13,7 +13,7 @@
             <td>{{ comment.data.name }}</td>
             <td>{{ comment.data.comment }}</td>
             <td>
-                <button class="btn btn-primary" (click)="approveComment(comment.ref.id)">Approve</button>
+                <button class="btn btn-primary" (click)='approveComment(comment.ref["@ref"].id)'>Approve</button>
             </td>
         </tr>
     </tbody>

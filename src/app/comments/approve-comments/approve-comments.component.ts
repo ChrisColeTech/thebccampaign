@@ -30,7 +30,7 @@ export class ApproveCommentsComponent implements OnInit {
   }
 
   approveComment(commentId: string) {
-    const body = { id: commentId };
+    const body = { ref: commentId };
 
     this.http.post(`${environment.apiUrl}/.netlify/functions/approve-comment`, body)
       .subscribe(response => {
