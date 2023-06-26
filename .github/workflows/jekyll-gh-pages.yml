@@ -59,6 +59,6 @@ jobs:
 
       - name: Build Angular app
         run: npm install && npm run build --prod
-    - name: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
