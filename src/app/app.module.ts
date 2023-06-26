@@ -12,6 +12,8 @@ import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { ViewCommentsComponent } from './comments/view-comments/view-comments.component';
 import { ApproveCommentsComponent } from './comments/approve-comments/approve-comments.component';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +31,8 @@ import { ApproveCommentsComponent } from './comments/approve-comments/approve-co
     NgbModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
