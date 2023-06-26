@@ -47,7 +47,6 @@ jobs:
         run: cd ./thebccampaign && npm install
       - name: Build Angular app
         run: cd ./thebccampaign && npm run build --prod
-          path: ./thebccampaign
       - name: Deploy to GitHub Pages
         id: deployment
         uses: JamesIves/github-pages-deploy-action@v4
