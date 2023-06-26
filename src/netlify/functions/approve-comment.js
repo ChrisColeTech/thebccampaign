@@ -5,25 +5,15 @@ const client = new Client({ secret: 'fnAFG-Ky5LAATX9wNckFUbX0ngbxY2jv_PlqSUVN' }
 
 const handler = async (event) => {
     const data = JSON.parse(event.body);
-    const { commentId } = data;
-    console.log(`Function 'update' invoked. Update comment with ID: ${commentId}`);
+    const { ref } = data;
+    console.log(`Function 'update' invoked. Update comment with ref: ${ref}`);
 
     try {
-        const response = await client.query(
-            query.Update(
-                query.Select(
-                    "ref",
-                    query.Get(query.Match(query.Index("all_comments"), commentId))
-                ),
-                {
-                    data: {
-                        approved: true, // Set the 'approved' field to 'true'
-                    },
-                }
-            )
-        );
-
-
+        const response = await client.query(query.Update(query.Ref(query.Collection('comments'), ref), {
+            data: {
+                approved: true, // Set the 'approved' field to 'true'
+            },
+        }))
 
         console.log('Success', response);
         return {
