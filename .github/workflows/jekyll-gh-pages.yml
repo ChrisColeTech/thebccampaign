@@ -10,10 +10,6 @@ permissions:
   pages: write
   id-token: write
 
-defaults:
-  run:
-    working-directory: ./thebccampaign
-
 jobs:
   build:
     runs-on: ubuntu-latest
