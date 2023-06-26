@@ -54,9 +54,8 @@ jobs:
         run: npm install
       - name: Build Angular app
         run: npm run build --prod
-      - name: Deploy
-        if: success()
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: dist/thebccampaign
+          folder: dist/thebccampaign
