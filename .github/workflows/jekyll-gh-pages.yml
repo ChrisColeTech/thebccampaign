@@ -10,9 +10,14 @@ permissions:
   pages: write
   id-token: write
 
+defaults:
+  run:
+    working-directory: ./thebccampaign
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -38,26 +43,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        working-directory: ./thebccampaign
         with:
           persist-credentials: false
-          
+          path: ./thebccampaign
       - name: Change directory
         run: |
           cd ./thebccampaign
           pwd
       - name: Set up Node.js
         uses: actions/setup-node@v3
-        working-directory: ./thebccampaign
         with:
           node-version: 16
-          
       - name: Install dependencies
         run: npm install
-        working-directory: ./thebccampaign
       - name: Build Angular app
         run: npm run build --prod
-        working-directory: ./thebccampaign
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
