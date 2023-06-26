@@ -15,12 +15,14 @@ const handler = async (event) => {
             )
           )
         ),
-        query.Lambda((x) => {
-          return {
-            ref: query.Select('ref', x),
-            data: query.Select(['data'], x)
+        query.Lambda(
+          (x) => {
+            return {
+              ref: query.Select(['ref'], query.Get(x)),
+              data: query.Select(['data'], query.Get(x))
+            };
           }
-        })
+        )
       )
     );
 
