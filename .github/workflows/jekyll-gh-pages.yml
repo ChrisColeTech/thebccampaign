@@ -50,13 +50,12 @@ jobs:
     needs: build
     steps:
   
-        
+      - name: Change directory
+        run: cd ./
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: npm init
-        run: npm init -y
 
       - name: Build Angular app
         run: npm install && npm run build --prod
