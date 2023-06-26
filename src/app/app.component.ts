@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, ViewChild } from '@angular/core';
+import { MatDrawerMode, MatSidenav } from '@angular/material/sidenav';
+import { BreakpointObserver, Breakpoints, MediaMatcher } from '@angular/cdk/layout';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,15 +9,32 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  isMenuOpen: boolean = false;
-  isSubMenuOpen: boolean = false; // Add this line
+  @ViewChild('sidenav') sidenav: MatSidenav;
+  isSidenavOpen = false;
+  isSidenavFixed = true;
+  sidenavMode: MatDrawerMode = 'side'; // Update the type here
+  mobileQuery: MediaQueryList;
 
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
+  private _mobileQueryListener: () => void;
+
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private media: MediaMatcher,
+    private router: Router
+  ) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+
+    // Subscribe to router events
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.closeSidenav();
+      }
+    });
   }
 
-  toggleSubMenu(isSubMenuOpen: boolean) {
-    this.isSubMenuOpen = isSubMenuOpen;
+  closeSidenav() {
+    this.sidenav.close();
   }
-
 }

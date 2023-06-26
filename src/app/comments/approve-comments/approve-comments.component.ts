@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'app-approve-comments',
   templateUrl: './approve-comments.component.html',
@@ -9,9 +10,9 @@ import { environment } from 'src/environments/environment';
 })
 export class ApproveCommentsComponent implements OnInit {
   comments: any[];
-  currentPage: number = 1;
-  itemsPerPage: number = 10;
-  totalPages: number;
+  displayedColumns: string[] = ['name', 'comment', 'actions'];
+  dataSource: MatTableDataSource<any>;
+
 
   constructor(private http: HttpClient) { }
 
@@ -23,7 +24,7 @@ export class ApproveCommentsComponent implements OnInit {
     this.http.get<any[]>(`${environment.apiUrl}/.netlify/functions/get-unapproved-comments`)
       .subscribe(data => {
         this.comments = data;
-        this.totalPages = Math.ceil(this.comments.length / this.itemsPerPage);
+        this.dataSource = new MatTableDataSource(this.comments);
       }, error => {
         console.error('Error fetching comments:', error);
       });
@@ -33,38 +34,13 @@ export class ApproveCommentsComponent implements OnInit {
     this.http.post(`${environment.apiUrl}/.netlify/functions/approve-comment`, commentId)
       .subscribe(response => {
         console.log('Comment approved successfully:', response);
-        // Optionally, you can update the local comments array or refresh the table here
         this.fetchUnapprovedComments();
       }, error => {
         console.error('Error approving comment:', error);
       });
   }
 
-  sortComments(key: string) {
-    // Logic for sorting the comments by the specified key
+  denyComment(commentId: string) {
+    // Logic for denying a comment
   }
-  getPagesArray(): number[] {
-    return Array(this.totalPages).fill(0).map((_, index) => index + 1);
-  }
-  previousPage(event: Event) {
-    event.preventDefault();
-    if (this.currentPage > 1) {
-      this.currentPage--;
-    }
-  }
-
-  nextPage(event: Event) {
-    event.preventDefault();
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-    }
-  }
-
-  goToPage(event: Event, page: number) {
-    event.preventDefault();
-    if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
-    }
-  }
-
 }
