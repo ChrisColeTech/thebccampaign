@@ -7,7 +7,8 @@ const handler = async (event) => {
   try {
     const response = await client.query(
       query.Map(
-        query.Paginate(query.Match(query.Index('approved_comments'), false)),
+        query.Paginate(query.Documents(query.Collection('comments'),
+          { data: { approved: false } })),
         query.Lambda((x) => query.Get(x))
       )
     );
