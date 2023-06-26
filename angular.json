@@ -29,11 +29,8 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              {
-                "glob": "**/*",
-                "input": "netlify",
-                "output": "netlify"
-              }
+              "src/netlify",
+              "src/package.json"
             ],
             "styles": [
               "node_modules/bootstrap/scss/bootstrap.scss",
