@@ -53,7 +53,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Build Angular app
-        run: npm run build --prod
+        run: pwd && npm run build --prod
       - name: Deploy to GitHub Pages
         id: deployment
         uses: JamesIves/github-pages-deploy-action@v4
