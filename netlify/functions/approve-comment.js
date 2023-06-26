@@ -6,7 +6,7 @@ const client = new Client({ secret: 'fnAFG-Ky5LAATX9wNckFUbX0ngbxY2jv_PlqSUVN' }
 const handler = async (event) => {
     const data = JSON.parse(event.body);
     const { commentId } = data;
-    console.log(`Function 'update' invoked. Update comment with ID: ${event}`);
+    console.log(`Function 'update' invoked. Update comment with ID: ${data}`);
     try {
         const response = await client.query(
             query.Update(
