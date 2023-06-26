@@ -39,17 +39,14 @@ jobs:
         with:
           persist-credentials: false
           path: ./thebccampaign
-      - name: Change directory
-        run: cd ./thebccampaign && pwd
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 16
       - name: Install dependencies
-        run: npm install
-          path: ./thebccampaign
+        run: cd ./thebccampaign && npm install
       - name: Build Angular app
-        run: pwd && npm run build --prod
+        run: cd ./thebccampaign && npm run build --prod
           path: ./thebccampaign
       - name: Deploy to GitHub Pages
         id: deployment
