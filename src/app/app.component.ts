@@ -6,5 +6,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'thebccampaign';
+  isMenuOpen: boolean = false;
+  isSubMenuOpen: boolean = false; // Add this line
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  toggleSubMenu(isSubMenuOpen: boolean) {
+    this.isSubMenuOpen = isSubMenuOpen;
+  }
+
 }

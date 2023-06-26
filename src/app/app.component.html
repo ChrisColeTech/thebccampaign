@@ -1,2 +1,40 @@
-<h1>Welcome to the Comment App!</h1>
-<app-comments></app-comments>
+<header class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" routerLink="/">Campaign Comments</a>
+        <button class="navbar-toggler" type="button" (click)="toggleMenu()"
+            [attr.aria-expanded]="isMenuOpen ? 'true' : 'false'" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" [class.show]="isMenuOpen">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/" routerLinkActive="active">Home</a>
+                </li>
+                <li class="nav-item" [class.show]="isSubMenuOpen" (mouseenter)="toggleSubMenu(true)"
+                    (mouseleave)="toggleSubMenu(false)">
+                    <a class="nav-link" routerLink="/comments" routerLinkActive="active">Comments</a>
+                    <ul class="navbar-nav" [class.show]="isSubMenuOpen">
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/comments/approve-comments"
+                                routerLinkActive="active">Approve Comments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/comments/view-comments" routerLinkActive="active">View
+                                Comments</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/about" routerLinkActive="active">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/contact" routerLinkActive="active">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<main class="container py-4">
+    <router-outlet></router-outlet>
+</main>

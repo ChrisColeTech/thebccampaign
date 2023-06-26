@@ -3,9 +3,8 @@ const process = require('process')
 
 const { Client, query } = require('faunadb')
 
-const client = new Client({
-  secret: process.env.FAUNADB_SERVER_SECRET,
-})
+/* Configure faunaDB Client with our secret */
+const client = new Client({ secret: 'fnAFG-Ky5LAATX9wNckFUbX0ngbxY2jv_PlqSUVN' });
 
 const handler = async (event) => {
   const data = JSON.parse(event.body)

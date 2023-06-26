@@ -9,7 +9,7 @@ const handler = async (event) => {
   const data = JSON.parse(event.body);
   console.log('Function `create` invoked', data);
   const { name, email, comment } = data;
-  const item = { data: { name, email, comment, timestamp: new Date().toISOString() } };
+  const item = { data: { name, email, comment, timestamp: new Date().toISOString(), approved: false } };
 
   /* Construct the fauna query */
   try {

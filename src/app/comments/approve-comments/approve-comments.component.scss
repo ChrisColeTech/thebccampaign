@@ -1,0 +1,19 @@
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.page-input {
+    margin-left: 10px;
+}
+
+.page-input input {
+    width: 60px;
+    margin-right: 5px;
+}
+
+.page-input button {
+    margin-left: 5px;
+}

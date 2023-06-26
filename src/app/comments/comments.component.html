@@ -1,14 +1,20 @@
-<h2>Comments</h2>
-<div id="comments">
-    <div *ngFor="let comment of comments" class="comment">
-        <p class="comment-text">{{ comment.comment }}</p>
-        <p class="comment-author">-{{ comment.name }}</p>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
     </div>
 </div>
-
-<form id="commentForm" (ngSubmit)="handleFormSubmit()">
-    <input type="text" id="name" name="name" placeholder="Name" [(ngModel)]="name" required>
-    <input type="email" id="email" name="email" placeholder="Email" [(ngModel)]="email" required>
-    <textarea id="comment" name="comment" placeholder="Comment" [(ngModel)]="comment" required></textarea>
-    <button type="submit">Submit</button>
-</form>
