@@ -5,8 +5,8 @@ const client = new Client({ secret: 'fnAFG-Ky5LAATX9wNckFUbX0ngbxY2jv_PlqSUVN' }
 
 const handler = async (event) => {
     const data = JSON.parse(event.body);
-    const { id } = event;
-    console.log(`Function 'update' invoked. update id: ${id}`);
+    const { commentId } = data;
+    console.log(`Function 'update' invoked. Update comment with ID: ${commentId}`);
     try {
         const response = await client.query(
             query.Update(
@@ -18,7 +18,7 @@ const handler = async (event) => {
                 }
             )
         );
-        console.log('success', response);
+        console.log('Success', response);
         return {
             statusCode: 200,
             headers: {
@@ -28,7 +28,7 @@ const handler = async (event) => {
             body: JSON.stringify(response),
         };
     } catch (error) {
-        console.log('error', error);
+        console.log('Error', error);
         return {
             statusCode: 400,
             body: JSON.stringify(error),
