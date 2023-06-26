@@ -34,6 +34,7 @@ export class ApproveCommentsComponent implements OnInit {
       .subscribe(response => {
         console.log('Comment approved successfully:', response);
         // Optionally, you can update the local comments array or refresh the table here
+        this.fetchUnapprovedComments();
       }, error => {
         console.error('Error approving comment:', error);
       });
