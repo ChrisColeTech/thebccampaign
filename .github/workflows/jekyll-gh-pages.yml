@@ -47,8 +47,11 @@ jobs:
         run: cd ./thebccampaign && npm install
       - name: Build Angular app
         run: cd ./thebccampaign && npm run build --prod
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Deploy
+        if: success()
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          folder: ./thebccampaign/dist/thebccampaign
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./thebccampaign/dist/thebccampaign
+          enable_jekyll: true
+    
