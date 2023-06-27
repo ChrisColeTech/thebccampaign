@@ -1,14 +1,31 @@
 <h2>Comments</h2>
-<div id="comments">
-    <div *ngFor="let comment of comments" class="comment">
-        <p class="comment-text">{{ comment.comment }}</p>
-        <p class="comment-author">-{{ comment.name }}</p>
+<div class="comment-carousel">
+    <div class="carousel-comment" *ngIf="displayComment">
+        <h4 class="carousel-comment-text">{{ displayComment.comment }}</h4>
+        <p class="carousel-comment-author"><em>-{{ displayComment.name }}</em></p>
     </div>
 </div>
 
-<form id="commentForm" (ngSubmit)="handleFormSubmit()">
-    <input type="text" id="name" name="name" placeholder="Name" [(ngModel)]="name" required>
-    <input type="email" id="email" name="email" placeholder="Email" [(ngModel)]="email" required>
-    <textarea id="comment" name="comment" placeholder="Comment" [(ngModel)]="comment" required></textarea>
-    <button type="submit">Submit</button>
-</form>
+<div class="comments-stack">
+    <div class="comment-container" *ngFor="let comment of comments; let i = index">
+        <div class="initial-square">{{ comment.name.charAt(0) }}</div>
+        <div class="comment-details">
+            <p class="comment-author"><strong>{{ comment.name }}</strong></p>
+            <p class="comment-timestamp"><em>{{ comment.timestamp | date: 'shortDate' }}</em></p>
+            <p class="comment-text">{{ comment.comment }}</p>
+        </div>
+    </div>
+</div>
+
+<div id="commentForm">
+    <form (ngSubmit)="handleFormSubmit()">
+        <input type="text" id="name" name="name" placeholder="Name" [(ngModel)]="name" required>
+        <input type="email" id="email" name="email" placeholder="Email" [(ngModel)]="email" required>
+        <textarea id="comment" name="comment" placeholder="Comment" [(ngModel)]="comment" required></textarea>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<div class="donate">
+    <img src="/assets/paypal-donate.png" alt="">
+</div>
