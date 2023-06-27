@@ -1,7 +1,0 @@
-{
-    "name": "thebccampaign",
-    "version": "0.0.0",
-    "dependencies": {
-        "faunadb": "^4.0.3"
-    }
-}
